@@ -1,5 +1,5 @@
 {
-  "name": "share-fs",
+  "name": "share",
   "version": "0.6.4",
   "description": "ShareJS 0.6.3 with a Filesystem DB",
   "keywords": [
@@ -19,7 +19,6 @@
     "browserchannel": "~1",
     "ws": "*",
     "connect": "<3.x",
-    "request": ">= 2.1.1",
     "coffee-script": "<1.7",
     "hat": "*"
   },
@@ -39,8 +38,7 @@
   },
   "scripts": {
     "build": "cake build",
-    "test": "cake test",
-    "prepublish": "cake webclient"
+    "test": "cake test"
   },
   "licenses": [
     {

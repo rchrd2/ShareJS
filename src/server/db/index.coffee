@@ -22,7 +22,6 @@ module.exports = (options) ->
   else
     Db = switch type
       when 'redis' then require './redis'
-      when 'couchdb' then require './couchdb'
       when 'pg' then require './pg'
       when 'mysql' then require './mysql'
       when 'amazon' then require './amazon'

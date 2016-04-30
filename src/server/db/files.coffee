@@ -26,14 +26,16 @@ module.exports = (options) ->
           callback "Document does not exist"
 
         ops = []
-        data.toString().split(/\n/).forEach (line) ->
-          try
-            row = JSON.parse(line)
-            if row.v >= start
-              ops.push row
-            else if row.v < end
-              ops.push row
-          catch err
+        try
+          data.toString().split(/\n/).forEach (line) ->
+            try
+              row = JSON.parse(line)
+              if row.v >= start
+                ops.push row
+              else if row.v < end
+                ops.push row
+            catch err
+        catch err
 
         callback null, ops
         return
@@ -43,6 +45,8 @@ module.exports = (options) ->
     create: (docName, data, callback) ->
       console.log "create " + docName if DEBUG
       fs.writeFile path + '/files/' + docName + '.json', JSON.stringify(data), (err) ->
+        if err
+          callback "There was an error creating"
         callback()
         return
       return
@@ -59,14 +63,14 @@ module.exports = (options) ->
 
     writeOp: (docName, opData, callback) ->
       # TODO efficient way to store ops in files
-      console.log "writeOp" + docName if DEBUG
+      console.log "writeOp " + docName if DEBUG
       fs.appendFile path + '/ops/' + docName + '.json', JSON.stringify(opData) + "\n", (err) ->
         callback()
         return
       return
 
     writeSnapshot: (docName, docData, dbMeta, callback) ->
-      console.log "writeSnapshot" + docName if DEBUG
+      console.log "writeSnapshot " + docName if DEBUG
       # Note, this might be an incorrect implementation because it only
       # stores one snapshot and ignores version
       fs.writeFile path + '/files/' + docName + '.json', JSON.stringify(docData), (err) ->
@@ -75,11 +79,16 @@ module.exports = (options) ->
       return
 
     getSnapshot: (docName, callback) ->
-      console.log "getSnapshot" + docName if DEBUG
+      console.log "getSnapshot " + docName if DEBUG
       fs.readFile path + '/files/' + docName + '.json', (err, data) ->
         if err
           callback "Document does not exist"
-        callback null, JSON.parse(String(data))
+        try
+          obj = JSON.parse(data.toString())
+          #console.log obj
+          callback null, obj
+        catch err
+          callback "Document does not exist"
         return
       return
     close: ->

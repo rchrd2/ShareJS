@@ -3,7 +3,7 @@
 # Compile with "cake package"
 
 module.exports =
-  name: "share-fs"
+  name: "share"
 
   # Change version with "cake [-V newversion] bump"
   version: "0.6.4"
@@ -31,9 +31,6 @@ module.exports =
 
     # Server works with v1 or v2
     connect: "<3.x"
-
-    # CouchDB Backend
-    request: ">= 2.1.1"
 
     # Prevent upgrade failures like v1.3. Bump this when tested.
     "coffee-script": "<1.7"
@@ -72,7 +69,7 @@ module.exports =
   scripts:
     build: "cake build"
     test: "cake test"
-    prepublish: "cake webclient"
+    #prepublish: "cake webclient"
 
   licenses: [
     type: "MIT"
