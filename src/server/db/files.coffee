@@ -7,11 +7,12 @@ fs = undefined
 fs = require('fs')
 
 module.exports = (options) ->
-  DEBUG = true
   path = undefined
   if options == undefined
     options = {}
+
   path = options.path or './sharejs-files'
+  DEBUG = options.DEBUG
 
   # create dirs
   fs.mkdirSync(path + '/files') unless fs.existsSync(path + '/files')
@@ -19,26 +20,39 @@ module.exports = (options) ->
 
   return {
     getOps: (docName, start, end, callback) ->
-      console.log "getOps" + docName if DEBUG
-      callback null, []
+      console.log "getOps " + docName if DEBUG
+      fs.readFile path + '/ops/' + docName + '.json', (err, data) ->
+        if err
+          callback "Document does not exist"
+
+        ops = []
+        data.toString().split(/\n/).forEach (line) ->
+          try
+            row = JSON.parse(line)
+            if row.v >= start
+              ops.push row
+            else if row.v < end
+              ops.push row
+          catch err
+
+        callback null, ops
+        return
       return
-      # fs.readFile path + '/ops/' + docName + '.json', (err, data) ->
-      #   if err
-      #     callback "Document does not exist"
-      #   callback JSON.parse(data)
-      #   return
-      # return
+
 
     create: (docName, data, callback) ->
-      console.log "create" + docName if DEBUG
+      console.log "create " + docName if DEBUG
       fs.writeFile path + '/files/' + docName + '.json', JSON.stringify(data), (err) ->
         callback()
         return
+      return
 
     'delete': (docName, dbMeta, callback) ->
-      console.log "delete" + docName if DEBUG
+      console.log "delete " + docName if DEBUG
       fs.unlink path + '/ops/' + docName  + '.json'
       fs.unlink path + '/files/' + docName + '.json', (err) ->
+        if err
+          callback "Document does not exist"
         callback()
         return
       return
@@ -49,9 +63,12 @@ module.exports = (options) ->
       fs.appendFile path + '/ops/' + docName + '.json', JSON.stringify(opData) + "\n", (err) ->
         callback()
         return
+      return
 
     writeSnapshot: (docName, docData, dbMeta, callback) ->
       console.log "writeSnapshot" + docName if DEBUG
+      # Note, this might be an incorrect implementation because it only
+      # stores one snapshot and ignores version
       fs.writeFile path + '/files/' + docName + '.json', JSON.stringify(docData), (err) ->
         callback()
         return
@@ -60,13 +77,13 @@ module.exports = (options) ->
     getSnapshot: (docName, callback) ->
       console.log "getSnapshot" + docName if DEBUG
       fs.readFile path + '/files/' + docName + '.json', (err, data) ->
-        console.log String(data)
         if err
           callback "Document does not exist"
         callback null, JSON.parse(String(data))
         return
       return
     close: ->
+      return
 
   }
 

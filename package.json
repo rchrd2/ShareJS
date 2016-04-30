@@ -1,7 +1,7 @@
 {
-  "name": "share",
-  "version": "0.6.3",
-  "description": "A database for concurrent document editing",
+  "name": "share-fs",
+  "version": "0.6.4",
+  "description": "ShareJS 0.6.3 with a Filesystem DB",
   "keywords": [
     "operational transformation",
     "ot",

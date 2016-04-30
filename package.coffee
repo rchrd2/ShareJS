@@ -3,11 +3,11 @@
 # Compile with "cake package"
 
 module.exports =
-  name: "share"
+  name: "share-fs"
 
   # Change version with "cake [-V newversion] bump"
-  version: "0.6.3"
-  description: "A database for concurrent document editing"
+  version: "0.6.4"
+  description: "ShareJS 0.6.3 with a Filesystem DB"
   keywords: [
   	"operational transformation"
   	"ot"
