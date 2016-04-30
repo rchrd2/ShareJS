@@ -33,10 +33,7 @@ var options = {
 };
 
 // Lets try and enable redis persistance if redis is installed...
-try {
-  require('redis');
-  options.db = {type: 'redis'};
-} catch (e) {}
+options.db = {type: 'files', path: '/Users/richard/Sites/misc/dev/ShareJS/__files'};
 
 console.log("ShareJS example server v" + sharejs.version);
 console.log("Options: ", options);
@@ -83,4 +80,5 @@ process.title = 'sharejs'
 process.on('uncaughtException', function (err) {
   console.error('An error has occurred. Please file a ticket here: https://github.com/josephg/ShareJS/issues');
   console.error('Version ' + sharejs.version + ': ' + err.stack);
+  console.log(err);
 });
