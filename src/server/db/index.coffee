@@ -7,7 +7,7 @@
 # Example usage:
 #  require('server/db').create {type:'redis'}
 
-defaultType = 'redis'
+defaultType = 'none'
 
 module.exports = (options) ->
   options ?= {}
@@ -21,11 +21,11 @@ module.exports = (options) ->
     null
   else
     Db = switch type
-      when 'redis' then require './redis'
-      when 'pg' then require './pg'
-      when 'mysql' then require './mysql'
-      when 'amazon' then require './amazon'
-      when 'mongo' then require './mongo'
+      # when 'redis' then require './redis'
+      # when 'pg' then require './pg'
+      # when 'mysql' then require './mysql'
+      # when 'amazon' then require './amazon'
+      # when 'mongo' then require './mongo'
       when 'files' then require './files'
       else throw new Error "Invalid or unsupported database type: '#{type}'"
     new Db options
