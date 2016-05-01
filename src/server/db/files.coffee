@@ -18,12 +18,16 @@ module.exports = (options) ->
   fs.mkdirSync(path + '/files') unless fs.existsSync(path + '/files')
   fs.mkdirSync(path + '/ops') unless fs.existsSync(path + '/ops')
 
+  isFunction = (x) ->
+    Object::toString.call(x) == '[object Function]'
+
+
   return {
     getOps: (docName, start, end, callback) ->
       console.log "getOps " + docName if DEBUG
       fs.readFile path + '/ops/' + docName + '.json', (err, data) ->
         if err
-          callback "Document does not exist"
+          callback? "Document does not exist"
 
         ops = []
         try
@@ -37,27 +41,33 @@ module.exports = (options) ->
             catch err
         catch err
 
-        callback null, ops
+        callback? null, ops
         return
       return
 
 
     create: (docName, data, callback) ->
       console.log "create " + docName if DEBUG
-      fs.writeFile path + '/files/' + docName + '.json', JSON.stringify(data), (err) ->
-        if err
-          callback "There was an error creating"
-        callback()
-        return
-      return
+      if fs.existsSync(path + '/files/' + docName + '.json')
+        console.log 'already exists' if DEBUG
+        console.log(callback)
+        # note I keep getting an error when calling callback
+        # TypeError: callback is not a function
+        # callback? 'Document already exists'
+      else
+        console.log 'creating' if DEBUG
+        fs.writeFile path + '/files/' + docName + '.json', JSON.stringify(data), (err) ->
+          console.log 'created' + path + '/files/' + docName + '.json' if DEBUG
+          return callback? err if err
+          callback?()
 
     'delete': (docName, dbMeta, callback) ->
       console.log "delete " + docName if DEBUG
       fs.unlink path + '/ops/' + docName  + '.json'
       fs.unlink path + '/files/' + docName + '.json', (err) ->
         if err
-          callback "Document does not exist"
-        callback()
+          callback? "Document does not exist"
+        callback?()
         return
       return
 
