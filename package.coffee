@@ -23,11 +23,11 @@ module.exports =
 
   dependencies:
     # Transports
-    sockjs: ">= 0.3.1"
-    "socket.io": "~0.8"
-    "socket.io-client": "~0.8"
+    #sockjs: ">= 0.3.1"
+    #"socket.io": "~0.8"
+    #"socket.io-client": "~0.8"
     browserchannel: "~1"
-    ws: "*"
+    #ws: "*"
 
     # Server works with v1 or v2
     connect: "<3.x"
@@ -54,7 +54,7 @@ module.exports =
     "uglify-js": "~1"
 
     # SockJS
-    "websocket": "*"
+    #"websocket": "*"
 
   engine: "node >= 0.6"
 

@@ -13,11 +13,7 @@
   "homepage": "",
   "author": "Joseph Gentle <josephg@gmail.com>",
   "dependencies": {
-    "sockjs": ">= 0.3.1",
-    "socket.io": "~0.8",
-    "socket.io-client": "~0.8",
     "browserchannel": "~1",
-    "ws": "*",
     "connect": "<3.x",
     "coffee-script": "<1.7",
     "hat": "*"
@@ -27,8 +23,7 @@
     "optimist": ">= 0.2.4",
     "nodeunit": "*",
     "shelljs": "*",
-    "uglify-js": "~1",
-    "websocket": "*"
+    "uglify-js": "~1"
   },
   "engine": "node >= 0.6",
   "main": "index.js",

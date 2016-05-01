@@ -25,7 +25,7 @@ else
   types = require '../types'
   {BCSocket} = require 'browserchannel'
   Doc = require('./doc').Doc
-  WebSocket = require 'ws'
+  #WebSocket = require 'ws'
   socketImpl = null
 
 class Connection
@@ -46,8 +46,8 @@ class Connection
 
     @socket = switch socketImpl
       when 'channel' then new BCSocket(host, reconnect:true)
-      when 'sockjs' then new ReconnectingWebSocket(host, SockJS)
-      when 'websocket' then new ReconnectingWebSocket(host)
+      #when 'sockjs' then new ReconnectingWebSocket(host, SockJS)
+      #when 'websocket' then new ReconnectingWebSocket(host)
       else new BCSocket(host, reconnect:true)
 
     @socket.onmessage = (msg) =>
@@ -132,7 +132,7 @@ class Connection
     @socket.close()
 
   # *** Doc management
- 
+
   makeDoc: (name, data, callback) ->
     throw new Error("Doc #{name} already open") if @docs[name]
     doc = new Doc(@, name, data)
