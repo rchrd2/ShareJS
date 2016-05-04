@@ -56,6 +56,8 @@ module.exports =
     # SockJS
     #"websocket": "*"
 
+    "coffeeify": "2.0.1"
+
   engine: "node >= 0.6"
 
   # Main file to execute
