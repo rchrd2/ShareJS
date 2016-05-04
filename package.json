@@ -23,7 +23,7 @@
     "optimist": ">= 0.2.4",
     "nodeunit": "*",
     "shelljs": "*",
-    "uglify-js": "~1"
+    "uglify-js": "0.1.0"
   },
   "engine": "node >= 0.6",
   "main": "index.js",

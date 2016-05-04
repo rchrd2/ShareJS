@@ -64,8 +64,8 @@ compile = (filenames, dest) ->
   filenames = expandNames filenames
   # I would really rather do this in pure JS.
   exec "coffee -j #{dest}.uncompressed.js -c #{filenames}"
-  console.log "Uglifying #{dest}"
-  makeUgly "#{dest}.uncompressed.js", "#{dest}.js"
+  #console.log "Uglifying #{dest}"
+  #makeUgly "#{dest}.uncompressed.js", "#{dest}.js"
 
 buildtype = (name) ->
   filenames = ['types/web-prelude', "types/#{name}"]
@@ -84,7 +84,7 @@ client = [
   'types/text'
   'types/text-api'
   'client/doc'
-  'client/reconnecting_websocket'
+  #'client/reconnecting_websocket'
   'client/connection'
   'client/index'
 ]
@@ -96,7 +96,6 @@ extras = [
 ]
 
 task 'webclient', 'Build the web client into one file', ->
-  compile client, 'webclient/share'
   buildtype 'json'
   buildtype 'text-tp2'
   buildtype 'text2'
@@ -107,6 +106,9 @@ task 'webclient', 'Build the web client into one file', ->
   # For backwards compatibility. (The ace.js file used to be called share-ace.js)
   cp "-f", "webclient/ace.js", "webclient/share-ace.js"
   cp "-f", "src/lib-etherpad/*", "webclient/"
+
+  compile client, 'webclient/share'
+
 
 option '-V', '--version [version]', 'The new patch version'
 task 'bump', 'Increase the patch level of the version, -V is optional', (options) ->

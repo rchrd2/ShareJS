@@ -89,4 +89,3 @@ exports.open = do ->
 unless WEB?
   exports.Doc = require('./doc').Doc
   exports.Connection = require('./connection').Connection
-
